@@ -1,0 +1,32 @@
+name: Render Video
+
+on:
+  repository_dispatch:
+    types: [render-video]
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Remotion
+        run: |
+          npm init -y
+          npm install remotion @remotion/cli react react-dom
+
+      - name: Render Video
+        run: |
+          echo "Rendering video for Home Tv..."
+
+      - name: Upload Video Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: home-tv-video
+          path: output.mp4
